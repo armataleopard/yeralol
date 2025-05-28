@@ -1,0 +1,712 @@
+/* Base styles and reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #ff0066;
+    --secondary-color: #00ffcc;
+    --background-color: #000;
+    --text-color: #fff;
+    --vhs-red: #ff3333;
+    --vhs-blue: #3333ff;
+    --vhs-green: #33ff33;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff0066" stroke-width="2"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/><path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>'), auto;
+}
+
+/* VHS overlay effect */
+.vhs-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.3;
+}
+
+.vhs-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.03),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.03)
+    );
+    mix-blend-mode: screen;
+}
+
+/* Header styles */
+header {
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+h1.glitch {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 4rem;
+    position: relative;
+    color: var(--text-color);
+    letter-spacing: 5px;
+    animation: noise 2s linear infinite;
+    text-shadow: 
+        2px 2px 0 var(--vhs-red),
+        -2px -2px 0 var(--vhs-blue);
+}
+
+h1.glitch::before,
+h1.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+h1.glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--vhs-red);
+    animation: glitch-1 2s infinite linear alternate-reverse;
+}
+
+h1.glitch::after {
+    left: -2px;
+    text-shadow: 2px 0 var(--vhs-blue);
+    animation: glitch-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-1 {
+    0% {
+        clip-path: inset(20% 0 80% 0);
+    }
+    20% {
+        clip-path: inset(60% 0 40% 0);
+    }
+    40% {
+        clip-path: inset(40% 0 60% 0);
+    }
+    60% {
+        clip-path: inset(80% 0 20% 0);
+    }
+    80% {
+        clip-path: inset(10% 0 90% 0);
+    }
+    100% {
+        clip-path: inset(30% 0 70% 0);
+    }
+}
+
+@keyframes glitch-2 {
+    0% {
+        clip-path: inset(15% 0 85% 0);
+    }
+    20% {
+        clip-path: inset(25% 0 75% 0);
+    }
+    40% {
+        clip-path: inset(85% 0 15% 0);
+    }
+    60% {
+        clip-path: inset(65% 0 35% 0);
+    }
+    80% {
+        clip-path: inset(5% 0 95% 0);
+    }
+    100% {
+        clip-path: inset(55% 0 45% 0);
+    }
+}
+
+@keyframes noise {
+    0%, 3%, 5%, 42%, 44%, 100% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+    4.3% {
+        opacity: 1;
+        transform: scaleY(1.7);
+    }
+    43% {
+        opacity: 1;
+        transform: scaleX(1.5);
+    }
+}
+
+.blink-text {
+    font-size: 1.5rem;
+    margin-top: 10px;
+    animation: blink 1s infinite;
+    color: var(--secondary-color);
+    text-shadow: 0 0 5px var(--secondary-color);
+}
+
+@keyframes blink {
+    0%, 49% {
+        opacity: 1;
+    }
+    50%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Main content styles */
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.enter-button {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+#enter-chaos {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+#enter-chaos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 50%,
+        transparent 100%
+    );
+    transform: translateX(-100%);
+}
+
+#enter-chaos:hover {
+    box-shadow: 
+        0 0 10px var(--primary-color),
+        0 0 20px var(--secondary-color);
+}
+
+#enter-chaos:hover::before {
+    transform: translateX(100%);
+    transition: transform 0.5s;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Notebook menu styles */
+.notebook {
+    width: 300px;
+    height: 400px;
+    margin: 0 auto;
+    perspective: 1000px;
+    transition: transform 0.6s;
+}
+
+.notebook-cover {
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400"><rect width="300" height="400" fill="%23333"/><rect x="20" y="20" width="260" height="360" fill="%23222" stroke="%23555" stroke-width="2"/></svg>');
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    font-size: 2rem;
+    transform-origin: left;
+    transition: transform 0.6s;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.notebook-cover span {
+    margin: 10px;
+}
+
+.notebook-pages {
+    width: 100%;
+    height: 100%;
+    background: #f5f5dc;
+    padding: 20px;
+    transform: rotateY(180deg);
+    position: absolute;
+    backface-visibility: hidden;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.notebook.open .notebook-cover {
+    transform: rotateY(-180deg);
+}
+
+.notebook.open .notebook-pages {
+    transform: rotateY(0);
+}
+
+.menu-item {
+    padding: 10px;
+    border-bottom: 1px solid #999;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s;
+}
+
+.menu-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+}
+
+/* Section styles */
+.section {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+}
+
+h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 0 var(--vhs-blue);
+}
+
+/* Episodes section */
+.episode {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--secondary-color);
+}
+
+.episode h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+}
+
+.episode p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+/* About section */
+.schizo-manifesto p {
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.running-text {
+    animation: runningText 20s linear infinite;
+    white-space: nowrap;
+}
+
+@keyframes runningText {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.glitch-text {
+    position: relative;
+    animation: textGlitch 3s infinite;
+}
+
+@keyframes textGlitch {
+    0%, 100% {
+        transform: none;
+        opacity: 1;
+    }
+    7% {
+        transform: skew(-0.5deg, -0.9deg);
+        opacity: 0.75;
+    }
+    10% {
+        transform: none;
+        opacity: 1;
+    }
+    27% {
+        transform: none;
+        opacity: 1;
+    }
+    30% {
+        transform: skew(0.8deg, -0.1deg);
+        opacity: 0.75;
+    }
+    35% {
+        transform: none;
+        opacity: 1;
+    }
+    52% {
+        transform: none;
+        opacity: 1;
+    }
+    55% {
+        transform: skew(-1deg, 0.2deg);
+        opacity: 0.75;
+    }
+    50% {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.bouncing-text {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+.static-text {
+    position: relative;
+    display: inline-block;
+}
+
+.static-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"><rect width="150" height="50" fill="none"/><rect width="1" height="1" x="0" y="0" fill="rgba(255,255,255,0.5)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.gif-container {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.glitch-image {
+    max-width: 100%;
+    height: auto;
+    filter: saturate(150%) contrast(110%);
+    animation: imageGlitch 5s infinite;
+}
+
+@keyframes imageGlitch {
+    0%, 100% {
+        transform: none;
+        opacity: 1;
+    }
+    7% {
+        transform: skew(-0.5deg, -0.9deg);
+        opacity: 0.75;
+        filter: saturate(150%) contrast(110%) hue-rotate(90deg);
+    }
+    10% {
+        transform: none;
+        opacity: 1;
+        filter: saturate(150%) contrast(110%);
+    }
+    27% {
+        transform: none;
+        opacity: 1;
+        filter: saturate(150%) contrast(110%);
+    }
+    30% {
+        transform: skew(0.8deg, -0.1deg);
+        opacity: 0.75;
+        filter: saturate(150%) contrast(110%) hue-rotate(-90deg);
+    }
+    35% {
+        transform: none;
+        opacity: 1;
+        filter: saturate(150%) contrast(110%);
+    }
+}
+
+/* Roadmap section */
+.strikethrough {
+    text-decoration: line-through;
+    position: relative;
+}
+
+.strikethrough::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--vhs-red);
+    transform: rotate(-5deg);
+}
+
+.diary {
+    background-color: #f5f5dc;
+    color: #000;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+.diary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><line x1="0" y1="25" x2="100" y2="25" stroke="%23ccc" stroke-width="0.5"/><line x1="0" y1="50" x2="100" y2="50" stroke="%23ccc" stroke-width="0.5"/><line x1="0" y1="75" x2="100" y2="75" stroke="%23ccc" stroke-width="0.5"/></svg>');
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.diary-page h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.grade-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px dashed #999;
+    padding-bottom: 0.5rem;
+}
+
+.grade {
+    color: var(--vhs-red);
+    font-weight: bold;
+}
+
+.diary-note {
+    margin-top: 2rem;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.3rem;
+}
+
+/* Launch section */
+.launch-container {
+    text-align: center;
+}
+
+.date-reminder {
+    font-size: 3rem;
+    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 2rem;
+}
+
+.pump-fun {
+    margin: 2rem 0;
+}
+
+.pump-link {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-family: 'Press Start 2P', cursive;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.pump-link:hover {
+    background-color: var(--secondary-color);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+.vhs-note {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+}
+
+/* Footer styles */
+footer {
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.telegram-link, .x-link {
+    text-decoration: none;
+}
+
+.torn-diary {
+    width: 150px;
+    height: 80px;
+    background-color: #f5f5dc;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    position: relative;
+    padding: 1rem;
+    transition: all 0.3s;
+}
+
+.x-diary {
+    background-color: #000;
+    color: #f5f5dc;
+    border: 1px solid #f5f5dc;
+}
+
+.torn-diary::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-color);
+    transform: rotate(45deg);
+}
+
+.torn-diary::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--background-color);
+    transform: rotate(45deg);
+}
+
+.torn-diary:hover {
+    transform: rotate(-5deg) scale(1.1);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    h1.glitch {
+        font-size: 2.5rem;
+    }
+    
+    .blink-text {
+        font-size: 1rem;
+    }
+    
+    #enter-chaos {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .notebook {
+        width: 250px;
+        height: 350px;
+    }
+    
+    .episode h3 {
+        font-size: 1.2rem;
+    }
+    
+    .episode p {
+        font-size: 1rem;
+    }
+    
+    .date-reminder {
+        font-size: 2rem;
+    }
+    
+    .pump-link {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1.glitch {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 1rem;
+    }
+    
+    .section {
+        padding: 1rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .notebook {
+        width: 200px;
+        height: 300px;
+    }
+} 
